@@ -141,14 +141,14 @@ footer{text-align:center;font-size:13px;color:var(--muted);padding:26px 16px 40p
 (()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const b=document.body,els=[...document.querySelectorAll('.r')];
  b.classList.add('pre');els.forEach((e,i)=>e.style.transitionDelay=(80+i*90)+'ms');
  requestAnimationFrame(()=>requestAnimationFrame(()=>b.classList.remove('pre')));setTimeout(()=>els.forEach(e=>e.style.transitionDelay=''),2000);})();
-const ENDPOINT='https://script.google.com/macros/s/AKfycbxZVttxWMmqKG097CZz0EL-kVm2z9TGxJ-6fHRuKuKGnR1OcskIPQ6Vyyj0D78wQPIt/exec';
+const ENDPOINT='https://pjalfmvefkxlcggigwjq.supabase.co/rest/v1/survey_responses',SBKEY='sb_publishable_mM4FCkv0wli2uyprwIx9EA_37iigGAT';
 const f=document.getElementById('f'),btn=document.getElementById('btn'),r=document.getElementById('reason'),rf=document.getElementById('rf'),sheet=document.getElementById('sheet'),rmt=document.getElementById('rmt');
 r.addEventListener('input',()=>{rf.classList.toggle('typed',r.value.length>0);rf.classList.remove('invalid');r.removeAttribute('aria-invalid')});
 f.addEventListener('submit',async e=>{e.preventDefault();if(btn.dataset.s!=='1')return;
  const reason=r.value.trim(),name=document.getElementById('name').value.trim();
  if(!reason){rmt.textContent='اكتب سببك قبل الإرسال.';rf.classList.add('invalid');r.setAttribute('aria-invalid','true');sheet.classList.remove('shake');void sheet.offsetWidth;sheet.classList.add('shake');r.focus();return;}
  btn.dataset.s='2';btn.setAttribute('aria-busy','true');
- try{ if(ENDPOINT) await fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({reason,name})}); else await new Promise(s=>setTimeout(s,800));
+ try{ if(ENDPOINT) {const res=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','apikey':SBKEY,'Prefer':'return=minimal'},body:JSON.stringify({issue:'03',reason:reason.slice(0,2000),name:name.slice(0,100)||null})});if(!res.ok)throw new Error('http '+res.status);} else await new Promise(s=>setTimeout(s,800));
   btn.dataset.s='3';btn.removeAttribute('aria-busy');document.body.classList.add('done');
  }catch(x){btn.dataset.s='1';btn.removeAttribute('aria-busy');rmt.textContent='ما وصل الإرسال، جرّب مرة ثانية.';rf.classList.add('invalid');}
 });
