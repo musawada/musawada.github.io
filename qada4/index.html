@@ -99,6 +99,7 @@ footer{text-align:center;font-size:13px;color:var(--muted);padding:26px 16px 40p
 .pre .r{opacity:0;filter:blur(8px);transform:translateY(14px)}
 @media (max-width:480px){.card{padding:24px 20px 22px;border-radius:24px}.nav{padding-bottom:18px}}
 @media (prefers-reduced-motion:reduce){*,*::after{transition-duration:0ms!important;transition-delay:0ms!important;animation:none!important}}
+.again{display:inline-block;margin-top:14px;font-family:inherit;font-size:15px;font-weight:700;color:var(--orange);background:#FFF1EB;border:0;border-radius:999px;padding:10px 22px;cursor:pointer}.again:hover{background:#FFE4D8}
 </style>
 </head>
 <body>
@@ -127,7 +128,7 @@ footer{text-align:center;font-size:13px;color:var(--muted);padding:26px 16px 40p
    <span class="s2" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span></span>
    <span class="s3" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
   </button>
-  <div class="thanks" role="status"><div><p><strong>وصلت أسبابك.</strong>سنعرضها مع أسباب بقية القادة، دون أسماء، في أول يوم من البرنامج.</p></div></div>
+  <div class="thanks" role="status"><div><p><strong>شكرًا لك</strong><button type="button" class="again" id="again">أضف سببًا آخر</button></p></div></div>
  </form>
 </main>
 </div>
@@ -147,6 +148,7 @@ f.addEventListener('submit',async e=>{e.preventDefault();if(btn.dataset.s!=='1')
   btn.dataset.s='3';btn.removeAttribute('aria-busy');document.body.classList.add('done');
  }catch(x){btn.dataset.s='1';btn.removeAttribute('aria-busy');rmt.textContent='لم يصل الإرسال، حاول مرة أخرى.';rf.classList.add('invalid');}
 });
+document.getElementById('again').addEventListener('click',()=>{document.body.classList.remove('done');btn.dataset.s='1';r.value='';r.dispatchEvent(new Event('input'));setTimeout(()=>r.focus(),900);});
 </script>
 </body>
 </html>
